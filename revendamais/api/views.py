@@ -1,7 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import LatestSearches
-from .serializers import SerializerLatestSearches, SerializerTrends
+from .serializers import (SerializerLatestSearches,
+                          SerializerTrends,
+                          SerializerSearches)
 from .helpers import Twitter
 
 
@@ -10,9 +12,19 @@ class LatestSearchesViewSet(viewsets.ModelViewSet):
     serializer_class = SerializerLatestSearches
 
 
-class Trends(viewsets.ViewSet):
+class TrendsViewSet(viewsets.ViewSet):
     twitter = Twitter()
-    serializer = SerializerTrends(twitter.trends(), many=True)
 
     def list(self, request):
-        return Response(self.serializer.data)
+        serializer = SerializerTrends(self.twitter.trends(), many=True)
+        return Response(serializer.data)
+
+
+class SearchViewSet(viewsets.ViewSet):
+    twitter = Twitter()
+
+    def list(self, request, search):
+        serializer = SerializerSearches(self.twitter.search(search),
+                                        many=True)
+
+        return Response(serializer.data)

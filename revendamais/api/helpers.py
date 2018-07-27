@@ -10,3 +10,6 @@ class Twitter:
 
     def trends(self):
         return self.api.GetTrendsCurrent()
+
+    def search(self, term):
+        return self.api.GetSearch(term=term)

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import LatestSearchesViewSet, Trends
+from .views import LatestSearchesViewSet, TrendsViewSet, SearchViewSet
 
 
 list_actions = {
@@ -13,6 +13,10 @@ urlpatterns = [
          name="latestsearches"),
 
     path('trends/',
-         Trends.as_view(list_actions),
+         TrendsViewSet.as_view(list_actions),
          name="trends"),
+
+    path('search/<str:search>',
+         SearchViewSet.as_view(list_actions),
+         name="search"),
 ]
