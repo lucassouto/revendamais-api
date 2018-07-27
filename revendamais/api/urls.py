@@ -1,7 +1,9 @@
-from django.urls import path
-from .views import home
+from rest_framework.routers import DefaultRouter
+from .views import LatestSearchesViewSet
+
 
 app_name = 'api'
-urlpatterns = [
-    path('teste/', view=home, name='home')
-]
+router = DefaultRouter()
+router.register('latestsearches',
+                LatestSearchesViewSet,
+                base_name='latestsearches')
