@@ -1,9 +1,15 @@
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from .views import LatestSearchesViewSet
 
 
+list_actions = {
+    'get': 'list',
+    'post': 'create'
+}
+
 app_name = 'api'
-router = DefaultRouter()
-router.register('latestsearches',
-                LatestSearchesViewSet,
-                base_name='latestsearches')
+urlpatterns = [
+    path('latestsearches/',
+         LatestSearchesViewSet.as_view(list_actions),
+         name="latestsearches"),
+]
