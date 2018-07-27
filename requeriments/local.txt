@@ -6,3 +6,4 @@ pylama-pylint==3.0.1
 pytest==3.6.3
 pytest-django==3.3.3
 coverage==4.5.1
+django-coverage-plugin==1.5.0
