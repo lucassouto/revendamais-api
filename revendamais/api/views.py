@@ -8,19 +8,22 @@ from .helpers import Twitter
 
 
 class LatestSearchesViewSet(viewsets.ModelViewSet):
+    default_response_headers = {'Access-Control-Allow-Origin': '*'}
     queryset = LatestSearches.objects.all()
     serializer_class = SerializerLatestSearches
 
 
 class TrendsViewSet(viewsets.ViewSet):
+    default_response_headers = {'Access-Control-Allow-Origin': '*'}
     twitter = Twitter()
 
-    def list(self, request):
-        serializer = SerializerTrends(self.twitter.trends(), many=True)
+    def list(self, request, woeid=None):
+        serializer = SerializerTrends(self.twitter.trends(woeid), many=True)
         return Response(serializer.data)
 
 
 class SearchViewSet(viewsets.ViewSet):
+    default_response_headers = {'Access-Control-Allow-Origin': '*'}
     twitter = Twitter()
 
     def list(self, request, search):

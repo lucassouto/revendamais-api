@@ -16,6 +16,10 @@ urlpatterns = [
          TrendsViewSet.as_view(list_actions),
          name="trends"),
 
+    path('trends/<str:woeid>/',
+         TrendsViewSet.as_view(list_actions),
+         name="trends_woeid"),
+
     path('search/<str:search>',
          SearchViewSet.as_view(list_actions),
          name="search"),

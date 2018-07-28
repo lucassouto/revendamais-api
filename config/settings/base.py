@@ -135,3 +135,6 @@ API_KEY = config('API_KEY')
 API_SECRET = config('API_SECRET')
 ACCESS_TOKEN = config('ACCESS_TOKEN')
 ACCESS_TOKEN_SECRET = config('ACCESS_TOKEN_SECRET')
+
+CORS_ORIGIN_ALLOW_ALL = True
+FILE_WOEID = config('FILE_WOEID', default='woeids.json')
