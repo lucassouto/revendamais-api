@@ -25,7 +25,7 @@ class SerializerUser(serializers.Serializer):
     followers_count = serializers.IntegerField()
     friends_count = serializers.IntegerField()
     listed_count = serializers.IntegerField()
-    created_at = serializers.CharField(max_legth=50)
+    created_at = serializers.CharField()
     favourites_count = serializers.IntegerField()
     statuses_count = serializers.CharField()
     lang = serializers.CharField()
@@ -45,7 +45,7 @@ class SerializerEntities(serializers.Serializer):
 
 
 class SerializerTweets(serializers.Serializer):
-    created_at = serializers.CharField(max_legth=50)
+    created_at = serializers.CharField()
     id_str = serializers.CharField()
     text = serializers.CharField()
     source = serializers.CharField()
