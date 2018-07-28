@@ -11,13 +11,23 @@ class Twitter:
     api = twitter.Api(API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
     def trends(self, location=None):
+        list_trends = []
         location_data = Woeid(FILE_WOEID)
         woeid = location_data.find_woeid(location)
 
         if woeid is not None:
-            return self.api.GetTrendsWoeid(woeid=woeid)
+            trends = self.api.GetTrendsWoeid(woeid=woeid)
+            for i in range(10):
+                list_trends.append(trends[i])
+
+            return list_trends
+
         else:
-            return self.api.GetTrendsCurrent()
+            trends = self.api.GetTrendsCurrent()
+            for i in range(10):
+                list_trends.append(trends[i])
+
+            return list_trends
 
     def search(self, term):
         return self.api.GetSearch(term=term, return_json=True)
