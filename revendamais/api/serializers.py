@@ -17,42 +17,57 @@ class SerializerTrends(serializers.Serializer):
 
 
 class SerializerUser(serializers.Serializer):
-    created_at = serializers.DateTimeField()
-    default_profile = serializers.BooleanField()
-    description = serializers.CharField()
-    favourites_count = serializers.IntegerField()
-    followers_count = serializers.IntegerField()
-    following = serializers.BooleanField()
-    friends_count = serializers.IntegerField()
-    id = serializers.CharField()
     id_str = serializers.CharField()
-    lang = serializers.CharField()
     name = serializers.CharField()
-    profile_background_color = serializers.CharField()
-    profile_background_image_url = serializers.CharField()
-    profile_background_image_url_https = serializers.CharField()
-    profile_banner_url = serializers.CharField()
+    screen_name = serializers.CharField()
+    description = serializers.CharField(allow_blank=True)
+    url = serializers.CharField(allow_null=True)
+    followers_count = serializers.IntegerField()
+    friends_count = serializers.IntegerField()
+    listed_count = serializers.IntegerField()
+    created_at = serializers.CharField(max_legth=50)
+    favourites_count = serializers.IntegerField()
+    statuses_count = serializers.CharField()
+    lang = serializers.CharField()
+    profile_background_image_url = serializers.CharField(allow_null=True)
+    profile_background_image_url_https = serializers.CharField(allow_null=True)
     profile_image_url = serializers.CharField()
     profile_image_url_https = serializers.CharField()
-    profile_link_color = serializers.CharField()
-    profile_sidebar_border_color = serializers.CharField()
-    profile_sidebar_fill_color = serializers.CharField()
-    profile_text_color = serializers.CharField()
-    profile_use_background_image = serializers.CharField()
-    screen_name = serializers.CharField()
-    statuses_count = serializers.CharField()
+    profile_banner_url = serializers.CharField()
+    following = serializers.BooleanField()
 
 
-class SerializerSearches(serializers.Serializer):
-    created_at = serializers.DateTimeField()
-    hashtags = serializers.CharField()
-    id = serializers.CharField()
+class SerializerEntities(serializers.Serializer):
+    hashtags = serializers.ListField(allow_null=True)
+    symbols = serializers.ListField(allow_null=True)
+    user_mentions = serializers.ListField(allow_null=True)
+    urls = serializers.JSONField(allow_null=True)
+
+
+class SerializerTweets(serializers.Serializer):
+    created_at = serializers.CharField(max_legth=50)
     id_str = serializers.CharField()
+    text = serializers.CharField()
+    source = serializers.CharField()
     in_reply_to_screen_name = serializers.CharField()
     in_reply_to_status_id = serializers.CharField()
     in_reply_to_user_id = serializers.CharField()
+    retweet_count = serializers.IntegerField()
+    favorite_count = serializers.IntegerField()
     lang = serializers.CharField()
-    source = serializers.CharField()
-    text = serializers.CharField()
-    urls = serializers.CharField()
     user = SerializerUser()
+    entities = SerializerEntities()
+
+
+class SerializerSearchMetaData(serializers.Serializer):
+    completed_in = serializers.DurationField()
+    max_id_str = serializers.CharField()
+    next_results = serializers.CharField()
+    query = serializers.CharField()
+    count = serializers.IntegerField()
+    since_id_str = serializers.CharField()
+
+
+class SerializerSearches(serializers.Serializer):
+    statuses = SerializerTweets(many=True)
+    search_metadata = SerializerSearchMetaData()
