@@ -32,6 +32,10 @@ class Twitter:
     def search(self, term):
         return self.api.GetSearch(term=term, return_json=True)
 
+    def locations(self):
+        with open(FILE_WOEID, 'r') as f:
+            return json.load(f)
+
 
 class Woeid:
     def __init__(self, file_name):

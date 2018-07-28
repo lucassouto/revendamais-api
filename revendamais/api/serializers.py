@@ -71,3 +71,8 @@ class SerializerSearchMetaData(serializers.Serializer):
 class SerializerSearches(serializers.Serializer):
     statuses = SerializerTweets(many=True)
     search_metadata = SerializerSearchMetaData()
+
+
+class SerializerLocations(serializers.Serializer):
+    name = serializers.CharField()
+    woeid = serializers.IntegerField()

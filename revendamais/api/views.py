@@ -1,9 +1,10 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import LatestSearches
 from .serializers import (SerializerLatestSearches,
                           SerializerTrends,
-                          SerializerSearches)
+                          SerializerSearches,
+                          SerializerLocations)
 from .helpers import Twitter
 
 
@@ -31,3 +32,17 @@ class SearchViewSet(viewsets.ViewSet):
 
         if serializer.is_valid():
             return Response(serializer.data)
+
+
+class LocationsViewSet(viewsets.ViewSet):
+    default_response_headers = {'Access-Control-Allow-Origin': '*'}
+    twitter = Twitter()
+
+    def list(self, request):
+        serializer = SerializerLocations(data=self.twitter.locations(),
+                                         many=True)
+
+        if serializer.is_valid():
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
