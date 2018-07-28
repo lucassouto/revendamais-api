@@ -20,7 +20,7 @@ class Twitter:
             return self.api.GetTrendsCurrent()
 
     def search(self, term):
-        return self.api.GetSearch(term=term)
+        return self.api.GetSearch(term=term, return_json=True)
 
 
 class Woeid:
