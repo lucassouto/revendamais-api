@@ -1,3 +1,4 @@
+import datetime
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import LatestSearches
@@ -28,12 +29,16 @@ class SearchViewSet(viewsets.ViewSet):
     twitter = Twitter()
 
     def list(self, request, term=None):
-        queryset = LatestSearches.objects.all()
+        queryset = LatestSearches.objects.filter(search=term)
         serializer = SerializerSearches(data=self.twitter.search(term=term))
 
         if serializer.is_valid():
-            if queryset.filter(search=term).count() == 0:
+            if queryset.count() == 0:
                 queryset.create(search=term)
+            else:
+                queryset[0].modified = datetime.datetime.now()
+                queryset[0].save()
+
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
