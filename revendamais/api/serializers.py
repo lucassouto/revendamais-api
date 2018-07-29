@@ -33,7 +33,7 @@ class SerializerUser(serializers.Serializer):
     profile_background_image_url_https = serializers.CharField(allow_null=True)
     profile_image_url = serializers.CharField()
     profile_image_url_https = serializers.CharField()
-    profile_banner_url = serializers.CharField()
+    profile_banner_url = serializers.CharField(required=False)
     following = serializers.BooleanField()
 
 
@@ -49,9 +49,9 @@ class SerializerTweets(serializers.Serializer):
     id_str = serializers.CharField()
     text = serializers.CharField()
     source = serializers.CharField()
-    in_reply_to_screen_name = serializers.CharField()
-    in_reply_to_status_id = serializers.CharField()
-    in_reply_to_user_id = serializers.CharField()
+    in_reply_to_screen_name = serializers.CharField(allow_null=True)
+    in_reply_to_status_id = serializers.CharField(allow_null=True)
+    in_reply_to_user_id = serializers.CharField(allow_null=True)
     retweet_count = serializers.IntegerField()
     favorite_count = serializers.IntegerField()
     lang = serializers.CharField()
@@ -61,10 +61,12 @@ class SerializerTweets(serializers.Serializer):
 
 class SerializerSearchMetaData(serializers.Serializer):
     completed_in = serializers.DurationField()
+    max_id = serializers.IntegerField()
     max_id_str = serializers.CharField()
-    next_results = serializers.CharField()
+    next_results = serializers.CharField(required=False)
     query = serializers.CharField()
     count = serializers.IntegerField()
+    since_id = serializers.IntegerField()
     since_id_str = serializers.CharField()
 
 

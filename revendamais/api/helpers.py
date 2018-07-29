@@ -29,8 +29,13 @@ class Twitter:
 
             return list_trends
 
-    def search(self, term):
-        return self.api.GetSearch(term=term, return_json=True)
+    def search(self, term=None, raw_query=None):
+        return self.api.GetSearch(
+            term=term,
+            count=20,
+            raw_query=raw_query,
+            return_json=True
+        )
 
     def locations(self):
         with open(FILE_WOEID, 'r') as f:

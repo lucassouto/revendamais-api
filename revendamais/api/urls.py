@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (LatestSearchesViewSet,
                     TrendsViewSet,
                     SearchViewSet,
-                    LocationsViewSet)
+                    LocationsViewSet,
+                    SearchRawQueryViewSet)
 
 
 list_actions = {
@@ -23,9 +24,13 @@ urlpatterns = [
          TrendsViewSet.as_view(list_actions),
          name="trends_woeid"),
 
-    path('search/<str:search>/',
+    path('search/<str:term>/',
          SearchViewSet.as_view(list_actions),
          name="search"),
+
+    path('search-raw-query/<str:raw_query>/',
+         SearchRawQueryViewSet.as_view(list_actions),
+         name="search_raw_query"),
 
     path('locations/',
          LocationsViewSet.as_view(list_actions),
