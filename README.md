@@ -11,6 +11,7 @@ Crie o banco de dados revendamais_api:
 CREATE USER "django_revendamais";
 CREATE DATABASE "revendamais_api";
 GRANT ALL PRIVILEGES ON DATABASE "revendamais_api" TO "django_revendamais";
+ALTER USER "django_revendamais" CREATEDB;
 ```
 
 Instale virtualenv:
