@@ -2,21 +2,23 @@ import datetime
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import LatestSearches
-from .serializers import (SerializerLatestSearches,
-                          SerializerTrends,
-                          SerializerSearches,
-                          SerializerLocations)
+from .serializers import (
+    SerializerLatestSearches,
+    SerializerTrends,
+    SerializerSearches,
+    SerializerLocations,
+)
 from .helpers import Twitter
 
 
 class LatestSearchesViewSet(viewsets.ModelViewSet):
-    default_response_headers = {'Access-Control-Allow-Origin': '*'}
+    default_response_headers = {"Access-Control-Allow-Origin": "*"}
     queryset = LatestSearches.objects.all()
     serializer_class = SerializerLatestSearches
 
 
 class TrendsViewSet(viewsets.ViewSet):
-    default_response_headers = {'Access-Control-Allow-Origin': '*'}
+    default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
     def list(self, request, woeid=None):
@@ -25,7 +27,7 @@ class TrendsViewSet(viewsets.ViewSet):
 
 
 class SearchViewSet(viewsets.ViewSet):
-    default_response_headers = {'Access-Control-Allow-Origin': '*'}
+    default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
     def list(self, request, term=None):
@@ -45,7 +47,7 @@ class SearchViewSet(viewsets.ViewSet):
 
 
 class SearchRawQueryViewSet(viewsets.ViewSet):
-    default_response_headers = {'Access-Control-Allow-Origin': '*'}
+    default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
     def list(self, request, raw_query=None):
@@ -58,12 +60,11 @@ class SearchRawQueryViewSet(viewsets.ViewSet):
 
 
 class LocationsViewSet(viewsets.ViewSet):
-    default_response_headers = {'Access-Control-Allow-Origin': '*'}
+    default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
     def list(self, request):
-        serializer = SerializerLocations(data=self.twitter.locations(),
-                                         many=True)
+        serializer = SerializerLocations(data=self.twitter.locations(), many=True)
 
         if serializer.is_valid():
             return Response(serializer.data)
