@@ -1,7 +1,7 @@
 import datetime
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .models import LatestSearches
+from .models import Searches
 from .serializers import (
     SerializerLatestSearches,
     SerializerTrends,
@@ -13,7 +13,7 @@ from .helpers import Twitter
 
 class LatestSearchesViewSet(viewsets.ModelViewSet):
     default_response_headers = {"Access-Control-Allow-Origin": "*"}
-    queryset = LatestSearches.objects.all()
+    queryset = Searches.objects.all()
     serializer_class = SerializerLatestSearches
 
 
@@ -21,7 +21,11 @@ class TrendsViewSet(viewsets.ViewSet):
     default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
-    def list(self, request, woeid=None):
+    def list(self, request):
+        serializer = SerializerTrends(self.twitter.trends(), many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, woeid=None):
         serializer = SerializerTrends(self.twitter.trends(woeid), many=True)
         return Response(serializer.data)
 
@@ -30,8 +34,8 @@ class SearchViewSet(viewsets.ViewSet):
     default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
-    def list(self, request, term=None):
-        queryset = LatestSearches.objects.filter(search=term)
+    def retrieve(self, request, term=None):
+        queryset = Searches.objects.filter(search=term)
         serializer = SerializerSearches(data=self.twitter.search(term=term))
 
         if serializer.is_valid():
@@ -42,21 +46,17 @@ class SearchViewSet(viewsets.ViewSet):
                 queryset[0].save()
 
             return Response(serializer.data)
-        else:
-            return Response(serializer.errors)
 
 
 class SearchRawQueryViewSet(viewsets.ViewSet):
     default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
-    def list(self, request, raw_query=None):
+    def retrieve(self, request, raw_query=None):
         serializer = SerializerSearches(data=self.twitter.search(raw_query=raw_query))
 
         if serializer.is_valid():
             return Response(serializer.data)
-        else:
-            return Response(serializer.errors)
 
 
 class LocationsViewSet(viewsets.ViewSet):
@@ -68,5 +68,3 @@ class LocationsViewSet(viewsets.ViewSet):
 
         if serializer.is_valid():
             return Response(serializer.data)
-        else:
-            return Response(serializer.errors)

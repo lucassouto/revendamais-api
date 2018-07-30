@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import LatestSearches
+from .models import Searches
 
 
 class SerializerLatestSearches(serializers.ModelSerializer):
     class Meta:
-        model = LatestSearches
+        model = Searches
         fields = "__all__"
 
 

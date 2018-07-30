@@ -52,10 +52,10 @@ class TestHelperTwitter:
 
 class TestWoeid:
     def test_check_json_woeid(self):
-        if FILE_WOEID != '':
+        if FILE_WOEID != "":
             assert True
 
     def test_get_woeid_location(self):
-        result = Woeid(FILE_WOEID).find_woeid('Brazil')
+        result = Woeid(FILE_WOEID).find_woeid("Brazil")
 
         assert result is not None
