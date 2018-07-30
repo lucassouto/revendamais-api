@@ -8,5 +8,5 @@ class TestLatestSearches:
         return resolve(url)
 
     def test_resolves_list_url(self):
-        resolver = self.resolve_by_name('api:latestsearches')
+        resolver = self.resolve_by_name("api:latestsearches")
         assert resolver.func.cls, LatestSearchesViewSet
