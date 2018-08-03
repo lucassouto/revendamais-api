@@ -40,9 +40,16 @@ class Twitter:
         if raw_query is not None:
             raw_query = re.sub("[^a-zA-Z0-9=&_-]", "", raw_query)
 
-        return self.api.GetSearch(
+        results = self.api.GetSearch(
             term=term, count=20, raw_query=raw_query, return_json=True
         )
+
+        for x in range(len(results["statuses"])):
+            results["statuses"][x]["text"] = results["statuses"][x]["text"].replace(
+                "teste", "sbrobous"
+            )
+
+        return results
 
     def locations(self):
         with open(FILE_WOEID, "r") as f:
