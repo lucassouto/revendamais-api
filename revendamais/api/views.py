@@ -12,13 +12,11 @@ from .helpers import Twitter
 
 
 class LatestSearchesViewSet(viewsets.ModelViewSet):
-    default_response_headers = {"Access-Control-Allow-Origin": "*"}
     queryset = Searches.objects.all()
     serializer_class = SerializerLatestSearches
 
 
 class TrendsViewSet(viewsets.ViewSet):
-    default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
     def list(self, request):
@@ -31,7 +29,6 @@ class TrendsViewSet(viewsets.ViewSet):
 
 
 class SearchViewSet(viewsets.ViewSet):
-    default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
     def retrieve(self, request, term=None):
@@ -49,7 +46,6 @@ class SearchViewSet(viewsets.ViewSet):
 
 
 class SearchRawQueryViewSet(viewsets.ViewSet):
-    default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
     def retrieve(self, request, raw_query=None):
@@ -60,7 +56,6 @@ class SearchRawQueryViewSet(viewsets.ViewSet):
 
 
 class LocationsViewSet(viewsets.ViewSet):
-    default_response_headers = {"Access-Control-Allow-Origin": "*"}
     twitter = Twitter()
 
     def list(self, request):
